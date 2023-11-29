@@ -42,8 +42,17 @@ public class RadixSortRC {
             
             //Your code goes here
             //Copy the items in the second array accordingly
+            for(int i = 0; i < input.length - 1; i++) {
+                int index = (input[i]/divisor)%RADIX_BASE;
+                int index1 = runningCounts[index]++;
+                copyArray[index1] = input[i];
+            }
             
-            
+            //copy from copyArray into original array
+            for(int i = 0; i < input.length; i++) {
+                input[i] = copyArray[i];
+            }
+                
         }
         
         // you may modify this line if needed
@@ -51,7 +60,7 @@ public class RadixSortRC {
     }
 
     private void updateRunningCounts() {
-        // updats the running counts
+        // updates the running counts
         runningCounts = new int[RADIX_BASE];
         runningCounts[0] = 0;
         for(int i=0; i<runningCounts.length-1; i++)
