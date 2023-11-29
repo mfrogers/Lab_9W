@@ -1,5 +1,3 @@
-package Lab9;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -31,20 +29,31 @@ public class RadixSortQueue {
     {
         for (int pass = 1; pass<=3; pass++)
         {
-
             // this value is used to get the corresponding digit in each pass
             int divisor = POWERS_OF_TEN[pass-1];
             
             // this method will add the values to the corresponding queue
-            updateQueues(input, divisor);
-            
-            //Your code goes here
-            //Put items back to the array from the queues
-            
-            
+            updateQueues(input, divisor);  
+            for(int temp : input) {
+            	int tempVal = 0;
+            	if(divisor == 1) 
+            		tempVal = temp%10;
+            	if(divisor == 10) 
+            		tempVal = temp%100/10;
+            	if(divisor == 100) 
+            		tempVal = temp/100;
+            	queues[tempVal].offer(temp);
+            }
+            int i = 0;
+            for(Queue q: queues) {
+            	if(q.peek() == null)
+            		continue;
+            	else {
+            		input[i] = (int) q.poll();
+            		i++;
+            	}
+            }
         }
-        
-        // you may modify this line if needed
         return input;
     }
 
@@ -60,7 +69,6 @@ public class RadixSortQueue {
     }
     
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
         int[]arr = {100,200,333,431,198};
         RadixSortQueue r = new RadixSortQueue();
         r.sort(arr);
